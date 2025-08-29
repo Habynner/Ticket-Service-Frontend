@@ -9,6 +9,8 @@ import GetAllTickets from './components/GetAllTickets';
 function App() {
   const [tab, setTab] = useState('POST');
   const [response, setResponse] = useState(null);
+  const [message, setMessage] = useState('Nenhuma ação realizada ainda');
+
 
   return (
     <div className="container">
@@ -20,7 +22,11 @@ function App() {
           <button
             key={t}
             className={`tab-button ${tab === t ? 'active' : ''}`}
-            onClick={() => setTab(t)}
+            onClick={() => {
+              setTab(t);
+              setResponse(null); /* Clear response on tab change */
+              setMessage(`Oba, vamos tentar uma requisição nova! \nQue tal tentar um ${t}?`);
+            }}
           >
             {t}
           </button>
@@ -38,7 +44,7 @@ function App() {
 
       {/* Response */}
       <h2>Resposta da API:</h2>
-      <pre>{response ? JSON.stringify(response, null, 2) : 'Nenhuma ação realizada ainda'}</pre>
+      <pre>{response ? JSON.stringify(response, null, 2) : message}</pre>
     </div>
   );
 }
